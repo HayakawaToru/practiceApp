@@ -58,7 +58,7 @@ $username = $dbFormData['name'];
   ?>
 </p>
 <div id="contents" class="site-width">
-
+<h1>hello</h1>
 <section id="profile-bar">
   <div class="prof-head">
     <div class="prof-img-head">
