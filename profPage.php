@@ -12,6 +12,13 @@ require "auth.php";
 ?>
 
 <?php
+// 投稿表示数
+$listSpan = 20;
+// 現在の表示レコード先頭を算出
+$currentMinNum = (($currentPageNum-1)*$listSpan);
+// DBから商品データを取得
+$dbPostData = getPostList($currentMinNum);
+
 $siteTitle = 'プロフィール';
 require "head.php";
 ?>
@@ -86,12 +93,15 @@ require "head.php";
 
       <section id="main">
         <?php
-          //投稿機能部分を読み込み 
+          //投稿機能部分を読み込み
           require "postPart.php";
           // ログイン者投稿を取得＋表示している
           $posts = getUserPost($user_id);
           require "postList.php";
+
+          require "pagination.php";
         ?>
+
       </section>
 
       <section id="side-bar">
