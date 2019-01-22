@@ -68,23 +68,20 @@ validRequired($_POST['pass_re'],'pass_re');
 
           // クエリ成功の場合
           if($stmt){
-            // ログイン有効期限（デフォルトを1時間とする）
-            $sesLimit = 60*60;
-            // 最終ログイン日時を現在日時に
-            $_SESSION['login_date'] = time();
-            $_SESSION['login_limit'] = $sesLimit;
-            // ユーザーIDを格納
-            $_SESSION['user_id'] = $dbh->lastInsertId();
-            if($_SESSION['user_id'] != 0){
-              debug('セッション変数の中身：'.print_r($_SESSION,true));
-              header("Location:mypage.php");
+              // ログイン有効期限（デフォルトを1時間とする）
+              $sesLimit = 60*60;
+              // 最終ログイン日時を現在日時に
+              $_SESSION['login_date'] = time();
+              $_SESSION['login_limit'] = $sesLimit;
+              // ユーザーIDを格納
+              $_SESSION['user_id'] = $dbh->lastInsertId();
+              if($_SESSION['user_id'] != 0){
+                debug('セッション変数の中身：'.print_r($_SESSION,true));
+                header("Location:mypage.php?u_id=".$_SESSION['user_id']);
             }else{
-              $_SESSION = NULL;
-              header("Location:login.php");
-          }
-          }else{
-            error_log('クエリに失敗しました');
-            $err_msg['common'] = MSG08;
+                $_SESSION = NULL;
+                header("Location:login.php");
+            }
           }
         } catch (Exception $e) {
           error_log('エラー発生：'. $e->getMessage());

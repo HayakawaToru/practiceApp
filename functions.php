@@ -238,6 +238,27 @@ function getUser($u_id){
   }
 }
 
+function getRecieveUser(){
+  debug('メッセージ送信先情報の取得');
+  // 例外処理
+  try{
+    //DBへ接続
+    $dbh = dbConnect();
+    // SQL文を作成
+    $sql = 'SELECT * FROM users WHERE delete_flg = 0';
+    $data = array();
+    // クエリ実行
+    $stmt = queryPost($dbh, $sql, $data);
+    if($stmt){
+      return $stmt->fetchAll();
+    }else{
+      return false;
+    }
+  }catch (Exception $e){
+    error_log('エラー発生：'. $e->getMessage());
+  }
+}
+
 function getUserPost($u_id, $currentMinNum = 1, $span = 20) {
   debug('ユーザーの投稿を取得します');
   // 例外処理
@@ -260,6 +281,27 @@ function getUserPost($u_id, $currentMinNum = 1, $span = 20) {
 
   } catch (Exception $e) {
     error_log('エラー発生：'. $e->getMessage());
+  }
+}
+
+function getMsgsAndBoard($board_id){
+  debug('メッセージ情報を取得します');
+  debug('掲示板ID:'.$board_id);
+
+  // 例外処理
+  try{
+    $dbh = dbConnect();
+    // SQL文作成
+    $sql = 'SELECT m.id, m.board_id, m.sender_id, m.reciever_id, msg, create_date FROM messages AS m RIGHT JOIN boards AS b ON b.id = m.board_id WHERE b.id = :id AND m.delete_flg = 0 ORDER BY m.create_date ASC';
+    $data = array(":id" => $board_id);
+    $stmt = queryPost($dbh, $sql, $data);
+    if($stmt){
+      return $stmt->fetchAll();
+    }else{
+      return false;
+    }
+  }catch(Exception $e){
+    error_log('エラー発生:' . $e->getMessage());
   }
 }
 
@@ -396,8 +438,8 @@ function uploadImg($file, $key){
       // file['mime']の値はブラウザ側で偽装可能なので、MIMEタイプを自前でチェックする
       // exif_imagetype関数は「IMAGETYPE_GIF」「IMAGETYPE_JPEG」などの定数を返す
       $type = @exif_imagetype($file['tmp_name']);
-      if(!in_array($type, [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG], true)) {
-        throw new RnttimeException('画像形式が未対応です');
+      if (!in_array($type, [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG], true)) { // 第三引数にはtrueを設定すると厳密にチェックしてくれるので必ずつける
+        throw new RnttimeException('画像形式が 未対応です');
       }
 
       // ファイルデータからSHA-1ハッシュをとってファイル名を決定し、ファイルを保存する
@@ -417,7 +459,6 @@ function uploadImg($file, $key){
       debug('ファイルパス：'.$path);
       return $path;
     } catch (RuntimeException $e){
-
       debug($e->getMessage());
       global $err_msg;
       $err_msg[$key] = $e->getMessage();

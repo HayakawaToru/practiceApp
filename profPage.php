@@ -12,6 +12,15 @@ require "auth.php";
 ?>
 
 <?php
+// 画面表示用データ取得
+//================================
+// カレントページのGETパラメータを取得
+$currentPageNum = (!empty($_GET['p'])) ? $_GET['p'] : 1;
+// パラメータに不正な値が入っているかチェック
+if(!is_int((int)$currentPageNum)){
+  error_log('エラー発生：指定ページに不正な値が入りました');
+  header("Location:mypage.php");
+}
 // 投稿表示数
 $listSpan = 20;
 // 現在の表示レコード先頭を算出
