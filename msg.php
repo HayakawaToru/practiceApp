@@ -28,12 +28,15 @@ $recieverInfo = getRecieveUser();
       <input type="hidden" name="sender" value="<?php echo $_GET['u_id'];?>">
       <?php
         foreach ($recieverInfo as $key => $val){
+          if($val['id']!=$_GET['u_id']){
       ?>
         <li>
           <input type="radio" name="reciever" value="<?php echo $val['id'];?>">
           <?php echo $val['name'];?>
         </li>
-      <?php } ?>
+      <?php
+        }
+      }?>
     </ul>
     <input type="submit" value="メッセージを作成する">
   </form>

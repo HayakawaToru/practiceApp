@@ -51,30 +51,40 @@ if(!empty($_POST)){
                           ':profile_path' => $profile_path
                         );
            // クエリ実行
-           $stmt = queryPost($dbh, $sql, $data);
-          // if($stmt) {
-          //   debug('クエリ成功');
-          //   // プロフィールページへ遷移
-          //   $_SESSION['msg_success'] = SUC02;
-            header("Location:profPage.php");
-          //   exit();
-          // }else {
-          //   debug('クエリ失敗しました');
-          //   $err_msg['common'] = MSG08;
-          //   $_SESSION['err_msg'] = $err_msg['common'];
-          //   exit();
-          // }
+          $stmt = queryPost($dbh, $sql, $data);
+          header("Location:profPage.php");
+
         } catch (Exception $e){
           error_log('エラー発生：'.$e->getMessage());
           $err_msg['common'] = MSG08;
           $_SESSION['err_msg'] = $err_msg['common'];
           exit();
         }
-      }else {
+        // 画像ファイルのどちらかもしくは両方が選択されていないかつ他項目の変更があった場合の処理
+      }else if(!empty($_POST) && $_FILES['header-img']['error'] == 4 || $_FILES['prof-img']['error'] == 4) {
+        // 例外処理
+        try{
+          // DBへ接続
+          $dbh = dbConnect();
+          // SQL文作成
+           $sql = 'UPDATE users SET name = :u_name, bio = :bio WHERE id = :u_id';
+           $data = array(':u_name' => $username, ':bio' => $bio, 'u_id' => $dbFormData['id']);
+           // クエリ実行
+          $stmt = queryPost($dbh, $sql, $data);
+          header("Location:profPage.php");
+
+        } catch (Exception $e){
+          error_log('エラー発生：'.$e->getMessage());
+          $err_msg['common'] = MSG08;
+          $_SESSION['err_msg'] = $err_msg['common'];
+          exit();
+        }
+      }else{
         debug('バリデーション失敗しました'.print_r($err_msg,true));
         debug('プロフィールページへ遷移します');
+        var_dump($_FILES['header-img']['error']);
         $_SESSION['err_msg'] = $err_msg['username'];
-        header("Location:profPage.php");
+        // header("Location:profPage.php");
       }
     }else{
       $_SESSION['err_msg'] = $err_msg['username'];

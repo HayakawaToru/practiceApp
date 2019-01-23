@@ -8,6 +8,7 @@ debugLogStart();
 
 // ログイン認証
 require "auth.php";
+debug('認証完了');
 ?>
 <?php
 // 画面表示用データ取得
@@ -26,7 +27,7 @@ $listSpan = 20;
 $currentMinNum = (($currentPageNum-1)*$listSpan);
 // DBから商品データを取得
 $dbPostData = getPostList($currentMinNum);
-
+debug('ポスト情報の取得');
 $siteTitle = "トップ";
 require "head.php";
 ?>
@@ -42,6 +43,7 @@ require "head.php";
 // ユーザー情報取得
 $dbFormData = getUser($_SESSION['user_id']);
 $username = $dbFormData['name'];
+debug('ユーザー情報をgetUserで取得');
 ?>
 
 <p id="js-show-msg" class="msg-slide">
@@ -85,11 +87,13 @@ $username = $dbFormData['name'];
   <!-- 投稿エリア -->
   <?php
     require "postPart.php";
+    debug('postPartを使って投稿フォームの形成');
   ?>
   <!-- 投稿取得エリア -->
   <?php
     $posts = $dbPostData['data'];
     require "postList.php";
+    debug('postListによって投稿の一覧を取得');
   ?>
 
   <?php
