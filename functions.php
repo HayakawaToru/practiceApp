@@ -181,6 +181,29 @@ function getErrMsg($key){
   }
 }
 //================================
+// ログイン認証
+//================================
+function isLogin(){
+  // ログインしている場合
+  if(!empty($_SESSION['login_date'])){
+    debug('ログイン済みのユーザーです');
+    // 現在日時が最終ログイン日時＋有効期限を超えていた場合
+    if(($_SESSION['login_date'] + $_SESSION['login_limit']) < time()){
+      debug('有効期限オーバーです');
+      // sessionの削除
+      session_destroy();
+      return false;
+    }else{
+      debug('ログイン有効期限以内です');
+      return true;
+    }
+  }else{
+    debug('未ログインユーザーです');
+    return false;
+  }
+}
+
+//================================
 // データベース
 //================================
 function dbConnect(){
@@ -343,6 +366,29 @@ function getPostList($currentMinNum = 1, $span = 20){
     error_log('エラー発生：'.$e->getMessage());
   }
 }
+
+function isLike($p_id, $u_id){
+  debug('お気に入り情報があるか確認します');
+  debug('ユーザID：'.$u_id);
+  debug('投稿ID：'.$p_id);
+
+  // 例外処理
+  try {
+    $dbh = dbConnect();
+    $sql = 'SELECT * FROM likes WHERE post_id = :p_id AND user_id = :u_id';
+    $data = array(":p_id" => $p_id, ":u_id" => $u_id);
+    $stmt = queryPost($dbh, $sql, $data);
+    if($stmt->rowCount()){
+      debug('お気に入りです');
+      return true;
+    }else{
+      debug('特に気に入っていません');
+      return false;
+    }
+  }catch(Exception $e){
+    error_log('エラー発生:' . $e->getMessage());
+  }
+}
 //================================
 // メール送信
 //================================
@@ -362,6 +408,8 @@ function sendMail($from, $to, $subject, $comment){
     }
   }
 }
+
+
 //================================
 // その他
 //================================

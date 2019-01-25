@@ -61,7 +61,7 @@ if(!empty($_POST)){
           exit();
         }
         // 画像ファイルのどちらかもしくは両方が選択されていないかつ他項目の変更があった場合の処理
-      }else if(!empty($_POST) && $_FILES['header-img']['error'] == 4 || $_FILES['prof-img']['error'] == 4) {
+      }else if(!empty($_POST) && ($_FILES['header-img']['error'] == 4 || $_FILES['prof-img']['error'] == 4)) {
         // 例外処理
         try{
           // DBへ接続

@@ -16,7 +16,9 @@
             <img src="<?php echo $profile_path;?>">
           </div>
           <div class="post-user-name">
-          <?php echo $postUserName; ?>
+            <a href="profPage.php?u_id=<?php echo $post['id'];?>">
+              <?php echo $postUserName; ?>
+            </a>
           </div>
         <div class="user-post">
           <?php echo $post['post']; ?>
@@ -26,6 +28,11 @@
               <img src='<?php echo $path;?>'>
             </div>
           <?php } ?>
+          <div class="bottom-status">
+            <ul>
+              <li><i class="far fa-heart js-click-like <?php if (isLike($post['post_id'],$_SESSION['user_id'])){ echo 'active';}?>" data-postid="<?php echo $post['post_id'];?>"></i></li>
+            </ul>
+          </div>
         </div>
       </div>
 <?php }?>

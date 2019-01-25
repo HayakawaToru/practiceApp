@@ -64,4 +64,33 @@ $(function(){
         fileReader.readAsDataURL(file);
   });
 
+  // お気に入り登録・削除
+  var $like,
+      likePostId;
+  $like = $('.js-click-like') || null;
+
+  $like.on('click', function(e){
+    likePostId = $(e.target).data('postid') || null;
+
+      // 数値の０はfalseと判定される。emptyではなくissetを使う
+      if(likePostId !== undefined && likePostId !== null){
+
+        console.log(likePostId);
+        var $this = $(this);
+
+        $.ajax({
+          type: "POST",
+          url: "ajaxPost.php",
+          data: { postId : likePostId}
+        }).done(function(data){
+          console.log('Ajax Success');
+          // クラス属性をtoggleでクリックごとに付け外しできるように
+          $this.toggleClass('active');
+        }).fail(function(msg){
+          console.log('Ajax Error');
+        });
+      }
+  });
+
+
 });
