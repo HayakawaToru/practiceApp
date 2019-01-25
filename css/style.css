@@ -59,8 +59,10 @@ a:hover{
   フォント
 ========================================*/
 .num {
+  display: block;
   font-size: 18px;
   color: #19CF86;
+  min-width: 80px;
 }
 
 /* mapageとprofPageで使用 */

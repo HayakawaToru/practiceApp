@@ -411,6 +411,72 @@ function isFollow($follow_id, $follower_id){
     error_log('エラー発生:' . $e->getMessage());
   }
 }
+
+// 投稿数を取得
+function countPosts($u_id){
+  debug('ログインユーザの投稿数をカウントします');
+  try{
+    $dbh = dbConnect();
+    $sql = 'SELECT post FROM posts WHERE id = :u_id';
+    $data = array(':u_id' => $u_id);
+    $stmt = queryPost($dbh, $sql, $data);
+    if($stmt){
+      debug('レコード数取得しました');
+      $result = $stmt->fetchAll();
+      $result = count($result);
+      return $result;
+    }else{
+      debug('レコード数取得に失敗しました');
+      return false;
+    }
+  }catch(Exception $e){
+    error_log('エラー発生:' . $e->getMessage());
+  }
+}
+
+// フォローしているアカウント数を取得
+function countFollows($u_id){
+  debug('フォローしているアカウント数をカウントします');
+  try{
+    $dbh = dbConnect();
+    $sql = 'SELECT follow_id FROM follows WHERE follow_id = :u_id';
+    $data = array(':u_id' => $u_id);
+    $stmt = queryPost($dbh, $sql, $data);
+    if($stmt){
+      debug('レコード数取得しました');
+      $result = $stmt->fetchAll();
+      $result = count($result);
+      return $result;
+    }else{
+      debug('レコード数取得に失敗しました');
+      return false;
+    }
+  }catch(Exception $e){
+    error_log('エラー発生:' . $e->getMessage());
+  }
+}
+
+// フォローしているアカウント数を取得
+function countFollowers($u_id){
+  debug('フォローされているアカウント数をカウントします');
+  try{
+    $dbh = dbConnect();
+    $sql = 'SELECT follower_id FROM follows WHERE follower_id = :u_id';
+    $data = array(':u_id' => $u_id);
+    $stmt = queryPost($dbh, $sql, $data);
+    if($stmt){
+      debug('レコード数取得しました');
+      $result = $stmt->fetchAll();
+      $result = count($result);
+      return $result;
+    }else{
+      debug('レコード数取得に失敗しました');
+      return false;
+    }
+  }catch(Exception $e){
+    error_log('エラー発生:' . $e->getMessage());
+  }
+}
 //================================
 // メール送信
 //================================
