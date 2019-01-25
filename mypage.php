@@ -26,7 +26,7 @@ $listSpan = 20;
 // 現在の表示レコード先頭を算出
 $currentMinNum = (($currentPageNum-1)*$listSpan);
 // DBから商品データを取得
-$dbPostData = getPostList($currentMinNum);
+$dbPostData = getPostList($_SESSION['user_id'],$currentMinNum);
 debug('ポスト情報の取得');
 $siteTitle = "トップ";
 require "head.php";

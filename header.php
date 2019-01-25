@@ -13,7 +13,7 @@
         ?>
           <li><a href="logout.php">ログアウト</a></li>
           <li><a href="msg.php?u_id=<?php echo $_SESSION['user_id'];?>">メッセージ</a></li>
-          <li><a href="profPage.php?_id=<?php echo $_SESSION['user_id'];?>">プロフィール</a></li>
+          <li><a href="profPage.php?u_id=<?php echo $_SESSION['user_id'];?>">プロフィール</a></li>
         <?php } ?>
       </ul>
     </nav>

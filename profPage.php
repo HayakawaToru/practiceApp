@@ -39,7 +39,8 @@ require "head.php";
 
     <?php
     // フォーム初期入力値を取得＋変数格納
-    $dbFormData = getUser($_SESSION['user_id']);
+
+    $dbFormData = getUser($_GET['u_id']);
     debug('取得したユーザー情報：'.print_r($dbFormData,true));
 
     $user_id = $dbFormData['id'];
@@ -80,9 +81,15 @@ require "head.php";
           <li><span>フォロー</span><span class="num">100</span></li>
           <li><span>フォロワー</span><span class="num">100</span></li>
         </ul>
-        <div class="profEdit-btn-wrap">
+        <?php if($_GET['u_id'] == $_SESSION['user_id']){?>
+        <div class="prof-btn-wrap">
           <button id="profEdit-btn" class="profEdit-btn">プロフィールを編集</button>
         </div>
+      <?php }else{?>
+        <div class="prof-btn-wrap">
+          <button id="follow-btn" class="js-follow-btn <?php if(isFollow($_SESSION['user_id'],$_GET['u_id'])){echo 'active';}?>" data-followid="<?php echo $_GET['u_id'];?>">フォローする</button>
+        </div>
+        <?php } ?>
       </div>
     </div>
 

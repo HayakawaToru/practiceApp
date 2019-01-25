@@ -329,7 +329,7 @@ function getMsgsAndBoard($board_id){
 }
 
 
-function getPostList($currentMinNum = 1, $span = 20){
+function getPostList($u_id,$currentMinNum = 1, $span = 20){
   debug('投稿情報を取得します');
   // 例外処理
   try{
@@ -349,10 +349,9 @@ function getPostList($currentMinNum = 1, $span = 20){
     }
 
     // ページング用のSQL文作成
-    $sql = 'SELECT * FROM posts';
+    $sql = 'SELECT * FROM posts WHERE id = :u_id OR id IN (SELECT follower_id FROM follows WHERE follow_id = :u_id)';
     $sql .= ' ORDER BY updated_at DESC LIMIT '.$span.' OFFSET '.$currentMinNum;
-    $data = array();
-
+    $data = array(':u_id' => $u_id);
     // クエリ実行
     $stmt = queryPost($dbh, $sql, $data);
     if($stmt){
@@ -377,6 +376,29 @@ function isLike($p_id, $u_id){
     $dbh = dbConnect();
     $sql = 'SELECT * FROM likes WHERE post_id = :p_id AND user_id = :u_id';
     $data = array(":p_id" => $p_id, ":u_id" => $u_id);
+    $stmt = queryPost($dbh, $sql, $data);
+    if($stmt->rowCount()){
+      debug('お気に入りです');
+      return true;
+    }else{
+      debug('特に気に入っていません');
+      return false;
+    }
+  }catch(Exception $e){
+    error_log('エラー発生:' . $e->getMessage());
+  }
+}
+
+function isFollow($follow_id, $follower_id){
+  debug('お気に入り情報があるか確認します');
+  debug('フォロー側ID：'.$follow_id);
+  debug('フォロワー側ID'.$follower_id);
+
+  // 例外処理
+  try {
+    $dbh = dbConnect();
+    $sql = 'SELECT * FROM follows WHERE follow_id = :fw_id AND follower_id = :fwer_id';
+    $data = array(":fw_id" => $follow_id, ":fwer_id" => $follower_id);
     $stmt = queryPost($dbh, $sql, $data);
     if($stmt->rowCount()){
       debug('お気に入りです');

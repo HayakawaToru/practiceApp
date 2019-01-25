@@ -92,5 +92,32 @@ $(function(){
       }
   });
 
+  // フォローAjax通信
+  var $follow,
+      followId;
+  $follow = $('.js-follow-btn') || null;
+  $follow.on('click', function(e){
+    followId = $(e.target).data('followid') || null;
+
+      // 数値の０はfalseと判定される。emptyではなくissetを使う
+      if(followId !== undefined && followId !== null){
+
+        console.log(followId);
+        var $this = $(this);
+
+        $.ajax({
+          type: "POST",
+          url: "ajaxFollow.php",
+          data: { followId : followId}
+        }).done(function(data){
+          console.log('Ajax Success');
+          // クラス属性をtoggleでクリックごとに付け外しできるように
+          $this.toggleClass('active');
+        }).fail(function(msg){
+          console.log('Ajax Error');
+        });
+      }
+  });
+
 
 });

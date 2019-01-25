@@ -149,14 +149,14 @@ header h1 a {
   margin-right: 30px;
 }
 
-div .profEdit-btn-wrap {
+div .prof-btn-wrap {
   float:right;
   height: 60px;
   margin-right: 150px;
   /* line-height: 60px; */
   box-sizing: border-box;
 }
-
+.js-follow-btn ,
 .profEdit-btn {
   font-size: 14px;
   font-weight: bold;
