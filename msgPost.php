@@ -6,6 +6,8 @@ debug('「　メッセージ登録処理開始　');
 debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
 debugLogStart();
 
+require "auth.php";
+
 if(!empty($_POST)){
   debug('POST送信があります'.print_r($_POST,true));
   $board_id = $_POST['board_id'];
@@ -24,6 +26,8 @@ if(!empty($_POST)){
 
     if($stmt){
       debug('クエリ成功しました');
+      $_SESSION['send_id'] = $send_id;
+      $_SESSION['reciever_id'] = $reciever_id;
       header("Location:makeMessage.php?b_id=${board_id}");
     }else{
       debug('クエリ失敗しました');

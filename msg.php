@@ -12,27 +12,34 @@ require "auth.php";
 $siteTitle = "メッセージ送信先選択";
 require "head.php";
 
-require "header.php";
 
 // メッセージ送信先のデータ格納変数
 $recieverInfo = getRecieveUser();
-?>
 
+?>
+<body class="page-1colum">
+<?php require "header.php";?>
 <!-- メインコンテンツ -->
 <div id="contents" class="site-width">
 <!-- Main -->
 <section id="main">
-<form action="makeMessage.php" method="post">
+<form action="makeMessage.php" method="post" class="form msg-form">
     <!-- foreachで送信先情報を展開 -->
-    <ul>メッセージの送信先を選んでください
+
+    <ul>
       <input type="hidden" name="sender" value="<?php echo $_GET['u_id'];?>">
       <?php
         foreach ($recieverInfo as $key => $val){
           if($val['id']!=$_GET['u_id']){
       ?>
-        <li>
-          <input type="radio" name="reciever" value="<?php echo $val['id'];?>">
-          <?php echo $val['name'];?>
+        <li class="list-dm-user">
+          <label><input type="radio" name="reciever" value="<?php echo $val['id'];?>"></label>
+          <div class="to-user-img">
+            <img src='<?php echo validImagePath($val['profile_path']);?>'>
+          </div>
+          <div class="to-send-name">
+            <?php echo $val['name'];?>
+          </div>
         </li>
       <?php
         }

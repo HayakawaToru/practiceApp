@@ -58,10 +58,12 @@ validRequired($_POST['pass_re'],'pass_re');
           $dbh = dbConnect();
 
           // SQL文作成
-          $sql = 'INSERT INTO users (email,pass,create_date,login_time,name,bio) VALUES(:email,:pass,:create_date,:login_time,"","")';
+          $sql = 'INSERT INTO users (email,pass,create_date,login_time,name,bio,header_path,profile_path) VALUES(:email,:pass,:create_date,:login_time,"","",:header_path,:profile_path)';
           $data = array(':email' => $email,':pass' => password_hash($pass,PASSWORD_DEFAULT),
                         ':create_date' => date('Y-m-d H:i:s'),
-                        ':login_time' => date('Y-m-d H:i:s')
+                        ':login_time' => date('Y-m-d H:i:s'),
+                        'header_path'=> '/Applications/MAMP/htdocs/practiceApp/uploads/cd2a50074257ad5a502313180cbb85dad6060fe6.jpeg',
+                        'profile_path' =>'/Applications/MAMP/htdocs/practiceApp/uploads/3a7c90a44d1f7e16b90c68a2ab8e3a0254a23fe6.jpeg'
           );
           // // クエリ実行
           $stmt = queryPost($dbh,$sql,$data);

@@ -12,7 +12,7 @@
   ?>
       <div class="each-post-wrap">
         <div class="each-post-content">
-          <div class="post-user-img">
+          <div class="user-img">
             <img src="<?php echo $profile_path;?>">
           </div>
           <div class="post-user-name">
@@ -30,7 +30,10 @@
           <?php } ?>
           <div class="bottom-status">
             <ul>
-              <li><i class="far fa-heart js-click-like <?php if (isLike($post['post_id'],$_SESSION['user_id'])){ echo 'active';}?>" data-postid="<?php echo $post['post_id'];?>"></i></li>
+              <li>
+                <i class="far fa-heart js-click-like <?php if (isLike($post['post_id'],$_SESSION['user_id'])){ echo 'active';}?>" data-postid="<?php echo $post['post_id'];?>"></i>
+                <?php echo countFav($post['post_id']);?>
+              </li>
             </ul>
           </div>
         </div>

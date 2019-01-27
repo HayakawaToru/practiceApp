@@ -477,6 +477,27 @@ function countFollowers($u_id){
     error_log('エラー発生:' . $e->getMessage());
   }
 }
+
+function countFav($post_id){
+  debug('いいね数をカウントします');
+  try{
+    $dbh = dbConnect();
+    $sql = 'SELECT user_id FROM likes WHERE post_id = :p_id';
+    $data = array(':p_id' => $post_id);
+    $stmt = queryPost($dbh, $sql, $data);
+    if($stmt){
+      debug('いいね数取得しました');
+      $result = $stmt->fetchAll();
+      $result = count($result);
+      return $result;
+    }else{
+      debug('いいね数取得に失敗しました');
+      return false;
+    }
+  }catch(Exception $e){
+    error_log('エラー発生:' . $e->getMessage());
+  }
+}
 //================================
 // メール送信
 //================================
