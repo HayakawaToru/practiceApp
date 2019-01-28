@@ -188,7 +188,7 @@ div .prof-btn-wrap {
 #top-nav {
   position: relative;
   float: right;
-  width:500px;
+  width:600px;
   height:50px;
 }
 
@@ -197,7 +197,7 @@ div .prof-btn-wrap {
   top: 0;
   right: 0;
   bottom: 0;
-  width: 450px;
+  width: 550px;
   height: 50px;
   line-height:60px;
   list-style: none;
@@ -397,7 +397,40 @@ nav a {
 /*========================================
   検索エリア
 ========================================*/
+/* ヘッダー内検索 */
+.search-form {
+  display: inline-block;
+}
 
+.search-column {
+  display: inline-block;
+  line-height: 50px;
+  width: 250px;
+}
+
+.search-column input[type="text"] {
+  display: inline-block;
+  vertical-align: middle;
+  border: none;
+  border-bottom: 1.5px solid lightgray;
+  width:180px;
+  height:23px;
+}
+
+.search-column input[type="submit"] {
+  border: none;
+  margin:0;
+  padding:0;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 12px;
+  font-weight: normal;
+  background: #19CF86;
+  color: white;
+  padding:3px;
+  border-radius: 4px;
+  cursor: pointer;
+}
 /*========================================
   リスト
 ========================================*/

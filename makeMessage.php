@@ -1,12 +1,17 @@
 <?php
 // 共通変数と関数の読み込み
 require "functions.php";
-require "auth.php";
 debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
 debug('「　メッセージ画面処理　');
 debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
 debugLogStart();
+
+// 認証
+require "auth.php";
+
+// セッション情報の取得
 debug('SESSION情報：'.print_r($_SESSION, true));
+
 $siteTitle = "メッセージ作成";
 require "head.php";
 

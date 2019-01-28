@@ -329,15 +329,15 @@ function getMsgsAndBoard($board_id){
 }
 
 
-function getPostList($u_id,$currentMinNum = 1, $span = 20){
+function getPostList($u_id, $currentMinNum = 1, $span = 20){
   debug('投稿情報を取得します');
   // 例外処理
   try{
     // DBへ接続
     $dbh = dbConnect();
     // 件数用のSQL文作成
-    $sql = 'SELECT id FROM posts';
-    $data = array();
+    $sql = 'SELECT id FROM posts WHERE id = :u_id OR id IN (SELECT follower_id FROM follows WHERE follow_id = :u_id)';
+    $data = array(":u_id" => $u_id);
     // クエリ実行
     $stmt = queryPost($dbh, $sql, $data);
     $rst['total'] = $stmt->rowCount();

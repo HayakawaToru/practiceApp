@@ -11,6 +11,12 @@
         <?php
         }else{
         ?>
+          <form class="search-form" action="search.php" method="post">
+            <div class="search-column">
+              <input type="text" placeholder="キーワード検索" name="search-word" class="search-word">
+              <input type="submit" value="検索する" class="search">
+            </div>
+          </form>
           <li><a href="logout.php">ログアウト</a></li>
           <li><a href="msg.php?u_id=<?php echo $_SESSION['user_id'];?>">メッセージ</a></li>
           <li><a href="profPage.php?u_id=<?php echo $_SESSION['user_id'];?>">プロフィール</a></li>

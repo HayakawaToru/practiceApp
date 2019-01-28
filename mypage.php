@@ -21,12 +21,21 @@ if(!is_int((int)$currentPageNum)){
   header("Location:mypage.php");
 }
 
+
 // 投稿表示数
 $listSpan = 20;
 // 現在の表示レコード先頭を算出
 $currentMinNum = (($currentPageNum-1)*$listSpan);
-// DBから商品データを取得
-$dbPostData = getPostList($_SESSION['user_id'],$currentMinNum);
+
+// $_SESSION['search-result']には検索による絞り込み結果が格納されている。
+// このセッション変数の有無で一覧表示が変わるように分岐
+if(empty($_SESSION['search-result'])){
+  // DBから商品データを取得
+  $dbPostData = getPostList($_SESSION['user_id'],$currentMinNum);
+}else{
+  $dbPostData = $_SESSION['search-result'];
+  $_SESSION['search-result'] = '';
+}
 debug('ポスト情報の取得');
 $siteTitle = "トップ";
 require "head.php";

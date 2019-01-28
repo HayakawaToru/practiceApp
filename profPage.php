@@ -77,9 +77,9 @@ require "head.php";
 
       <div class="profPage-statusList">
         <ul>
-          <li><span>ツイート</span><span class="num">100</span></li>
-          <li><span>フォロー</span><span class="num">100</span></li>
-          <li><span>フォロワー</span><span class="num">100</span></li>
+          <li><span>ツイート</span><span class="num"><?php echo countPosts($_SESSION['user_id']);?></span></li>
+          <li><span>フォロー</span><span class="num"><?php echo countFollows($_SESSION['user_id']);?></span></li>
+          <li><span>フォロワー</span><span class="num"><?php echo countFollowers($_SESSION['user_id']);?></span></li>
         </ul>
         <?php if($_GET['u_id'] == $_SESSION['user_id']){?>
         <div class="prof-btn-wrap">
