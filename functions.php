@@ -261,6 +261,28 @@ function getUser($u_id){
   }
 }
 
+function getOnePost($p_id){
+  debug('編集あるいは削除の対象となる投稿を取得します');
+  // 例外処理
+  try{
+    // DBへ接続
+    $dbh = dbConnect();
+    $sql = 'SELECT post, media_path_01, u.name, u.profile_path FROM posts AS p LEFT JOIN users AS u ON p.id = u.id WHERE post_id = :p_id';
+    $data = array(':p_id' => $p_id);
+    $stmt = queryPost($dbh, $sql, $data);
+
+    if($stmt){
+      return $stmt->fetch();
+    }else{
+      return false;
+    }
+
+  }catch (Exception $e){
+    error_log('エラー発生：'. $e->getMessage());
+  }
+}
+
+// DM送信先候補の取得
 function getRecieveUser(){
   debug('メッセージ送信先情報の取得');
   // 例外処理
@@ -282,6 +304,7 @@ function getRecieveUser(){
   }
 }
 
+// ログインユーザーの投稿を取得
 function getUserPost($u_id, $currentMinNum = 1, $span = 20) {
   debug('ユーザーの投稿を取得します');
   // 例外処理

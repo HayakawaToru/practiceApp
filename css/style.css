@@ -692,6 +692,7 @@ textarea:focus {
   min-height: 90px;
   border: 1px solid #e6ecf0;
   overflow: hidden;
+  position:relative;
 }
 
 .each-post-content {
@@ -713,6 +714,7 @@ textarea:focus {
 }
 
 .post-user-name {
+  display: inline-block;
   font-size: 14px;
   font-weight: bold;
 }
@@ -722,7 +724,14 @@ textarea:focus {
   width: 100px;
 }
 
+.bottom-status {
+  margin-top: 20px;
+}
 
+.post-status {
+  font-size: 14px;
+  color: rgba(171, 183, 183, 1);
+}
 
 /* お気に入りAjaxで色変化 */
 .active{
@@ -921,4 +930,37 @@ textarea:focus {
   font-size:16px;
   color: white;
   line-height: 40px;
+}
+
+/* post部分の編集・削除のウインドウ表示 */
+.js-open-edit-menu {
+  display: inline-block;
+  width: 50px;
+  float: right;
+  margin-bottom: 50px;
+  cursor: pointer;
+}
+
+.post-edit-wrap{
+  display: none;
+  width: 80px;
+  height: 50px;
+  border: 1px solid lightgray;
+  border-radius: 3px;
+
+  /* class each-post-contentをrelativeとして */
+  position:absolute;
+  right: 20px;
+  top: 30px;
+}
+
+.post-edit-wrap li {
+  padding-left: 10px;
+}
+
+.post-edit-wrap a{
+  list-style: none;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 14px;
 }

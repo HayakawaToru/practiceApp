@@ -20,6 +20,15 @@
               <?php echo $postUserName; ?>
             </a>
           </div>
+          <div class="js-open-edit-menu">
+            <i class="fas fa-angle-down "></i>
+            <!-- 編集・削除用モーダルウインドウエリア -->
+            <div class="post-edit-wrap">
+              <!-- $_GETのpage_idで編集と削除画面の分岐、post_idで編集対象を指定 -->
+              <li><a href="editPost.php?page_id=1&post_id=<?php echo $post['id'] ;?>">編集する</a></li>
+              <li><a href="editPost.php?page_id=2&post_id=<?php echo $post['id'] ;?>">削除する</a></li>
+            </div>
+          </div>
         <div class="user-post">
           <?php echo $post['post']; ?>
         </div>
@@ -30,13 +39,14 @@
           <?php } ?>
           <div class="bottom-status">
             <ul>
-              <li>
+              <li class="post-status">
                 <i class="far fa-heart js-click-like <?php if (isLike($post['post_id'],$_SESSION['user_id'])){ echo 'active';}?>" data-postid="<?php echo $post['post_id'];?>"></i>
-                <?php echo countFav($post['post_id']);?>
+                <!-- php echo countFav($post['post_id']); -->
               </li>
             </ul>
           </div>
         </div>
+
       </div>
 <?php }?>
 </div>

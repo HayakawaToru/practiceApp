@@ -20,6 +20,11 @@ $(function(){
     $('.imgDrop-container').removeClass('hidden-wrap');
   });
 
+  // 投稿編集・削除モーダルウィンドウ
+  $('.js-open-edit-menu').on('click',function(e){
+    $(e.target).children('.post-edit-wrap').toggle();
+  });
+
   // メッセージ表示
   var $jsShowMsg = $('#js-show-msg');
   var $jsShowErrMsg = $('#js-show-err-msg');
